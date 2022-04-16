@@ -87,7 +87,7 @@ def mac_build():
 
     create_archive()
 
-    if not mac_sign(os.path.realpath('binaries.zip')):
+    if not mac_notarize(os.path.realpath('binaries.zip')):
         print('notarization failed')
         return False
 
