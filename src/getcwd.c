@@ -12,7 +12,7 @@
 
 int main(int argc, char **argv)
 {
-	char path[1024] = {};
+	char path[1024] = {0};
 	if (CWDFUNC(path, sizeof(path)))
 	{
 		printf("cwd: %s\n", path);
