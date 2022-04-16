@@ -30,6 +30,12 @@ set_target_properties(helloworld PROPERTIES
 		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
 		)
 
+add_executable(getcwd src/getcwd.c)
+set_target_properties(getcwd PROPERTIES
+		POSITION_INDEPENDENT_CODE OFF
+		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
+		)
+
 add_executable(exitcode src/exitcode.c)
 set_target_properties(exitcode PROPERTIES
 		POSITION_INDEPENDENT_CODE OFF
