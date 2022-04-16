@@ -3,6 +3,7 @@ import sys
 import os
 import subprocess
 import zipfile
+import glob
 
 
 def run_cmd(cmd: str) -> bool:
@@ -24,8 +25,23 @@ def create_archive():
                 z.write(os.path.join(root, file), os.path.join(root, file))
 
 
-def mac_sign():
-    pass
+def keychain_unlocker():
+    keychain_unlocker = os.environ["HOME"] + "/unlock-keychain"
+    if os.path.exists(keychain_unlocker):
+        return subprocess.call([keychain_unlocker]) == 0
+    return False
+
+
+def mac_sign(path):
+    if not keychain_unlocker():
+        return False
+
+    args = ['codesign']
+    args += ["--options", "runtime", "--entitlements", "entitlements.plist", "--timestamp", "-s", "Developer ID"]
+    for f in glob.glob(path):
+        args.append(f)
+
+    return subprocess.call(args) == 0
 
 
 def mac_build():
@@ -41,6 +57,10 @@ def mac_build():
 
     build_cmd = f"cmake -B build/x86_64 -DARCH=x86_64 . && cd build/x86_64 && make"
     if not run_cmd(build_cmd):
+        return False
+
+    if not mac_sign('binaries/*/*'):
+        print('codesign failed')
         return False
 
     create_archive()
