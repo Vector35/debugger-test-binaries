@@ -48,17 +48,17 @@ def mac_build():
 
 
 def linux_build():
-    if not os.path.exists('build/x86'):
-        os.makedirs('build/x86')
-
-    build_cmd = f"cmake -B build/x86 -DARCH=x86 . && cd build/x86 && make"
-    if not run_cmd(build_cmd):
-        return False
-
     if not os.path.exists('build/x86_64'):
         os.makedirs('build/x86_64')
 
     build_cmd = f"cmake -B build/x86_64 -DARCH=x86_64 . && cd build/x86_64 && make"
+    if not run_cmd(build_cmd):
+        return False
+
+    if not os.path.exists('build/x86'):
+        os.makedirs('build/x86')
+
+    build_cmd = f"cmake -B build/x86 -DARCH=x86 . && cd build/x86 && make"
     if not run_cmd(build_cmd):
         return False
 
