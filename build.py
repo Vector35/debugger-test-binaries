@@ -25,85 +25,23 @@ def create_archive():
                 z.write(os.path.join(root, file), os.path.join(root, file))
 
 
-# def keychain_unlocker():
-#     keychain_unlocker = os.environ["HOME"] + "/unlock-keychain"
-#     if os.path.exists(keychain_unlocker):
-#         return subprocess.call([keychain_unlocker]) == 0
-#     return False
-#
-#
-# def mac_sign(path):
-#     if not keychain_unlocker():
-#         return False
-#
-#     args = ['codesign']
-#     args += ["--options", "runtime", "--entitlements", "entitlements.plist", "--timestamp", "-s", "Developer ID"]
-#     for f in glob.glob(path):
-#         args.append(f)
-#
-#     return subprocess.call(args) == 0
-#
-#
-# def mac_notarize(path):
-#     if not keychain_unlocker():
-#         return False
-#     args = ["/usr/bin/xcrun", "notarytool", "submit", path, "--verbose", "-p", "binaryninja", "--wait", "--no-progress", "--keychain", os.environ["HOME"] + "/Library/Keychains/codesign-db"]
-#     print("Uploading for notarization...")
-#     try:
-#         result = subprocess.check_output(args, stderr=subprocess.STDOUT).decode("charmap")
-#     except subprocess.CalledProcessError as e:
-#         print(e.output)
-#         return False
-#     print(result)
-#     result = result.split('\n')
-#     request = None
-#     for line in result:
-#         if line.startswith('  status: Accepted'):
-#             request = line.split(':')[1].strip()
-#     if request is None:
-#         print("No valid request ID received")
-#         return False
-#     return True
-
-
 def mac_build():
-    if not os.path.exists('build/arm64'):
-        os.makedirs('build/arm64')
-
     build_cmd = f"cmake -B build/arm64 -DARCH=arm64 . && cd build/arm64 && make"
     if not run_cmd(build_cmd):
         return False
 
-    if not os.path.exists('build/x86_64'):
-        os.makedirs('build/x86_64')
-
     build_cmd = f"cmake -B build/x86_64 -DARCH=x86_64 . && cd build/x86_64 && make"
     if not run_cmd(build_cmd):
         return False
 
-    # if not mac_sign('binaries/*/*'):
-    #     print('codesign failed')
-    #     return False
-
     create_archive()
-
-    # if not mac_notarize(os.path.realpath('binaries.zip')):
-    #     print('notarization failed')
-    #     return False
-
     return True
 
 
 def linux_build():
-    if not os.path.exists('build/x86_64'):
-        os.makedirs('build/x86_64')
-
     build_cmd = f"cmake -B build/x86_64 -DARCH=x86_64 . && cd build/x86_64 && make"
     if not run_cmd(build_cmd):
         return False
-
-    if not os.path.exists('build/x86'):
-        os.makedirs('build/x86')
 
     build_cmd = f"cmake -B build/x86 -DARCH=x86 . && cd build/x86 && make"
     if not run_cmd(build_cmd):
@@ -114,32 +52,9 @@ def linux_build():
 
 
 def windows_build():
-    if not os.path.exists('build/x86_64'):
-        os.makedirs('build/x86_64')
-
-    # vcvars = subprocess.check_output(fR"""call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars64.bat" && set""", shell=True)
-    # for line in vcvars.split(b'\r\n'):
-    #     line = line.strip()
-    #     if b'=' not in line:
-    #         continue
-    #     parts = line.split(b'=')
-    #     key = parts[0].decode()
-    #     value = b'='.join(parts[1:]).decode()
-    #     os.environ[key] = value
-
     build_cmd = f"cmake -B build/x86_64 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && make"
     if not run_cmd(build_cmd):
         return False
-
-    # vcvars = subprocess.check_output(fR"""call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat" && set""", shell=True)
-    # for line in vcvars.split(b'\r\n'):
-    #     line = line.strip()
-    #     if b'=' not in line:
-    #         continue
-    #     parts = line.split(b'=')
-    #     key = parts[0].decode()
-    #     value = b'='.join(parts[1:]).decode()
-    #     os.environ[key] = value
 
     build_cmd = f"cmake -B build/x86 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && make"
     if not run_cmd(build_cmd):
