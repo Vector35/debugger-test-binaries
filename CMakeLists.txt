@@ -15,13 +15,11 @@ endif()
 
 if (APPLE)
 	set(CMAKE_OSX_ARCHITECTURES ${ARCH})
-elseif (UNIX)
+else()
 	if (ARCH STREQUAL "x86")
 		set(CMAKE_C_FLAGS -m32)
 		set(CMAKE_CXX_FLAGS -m32)
 	endif()
-else()
-#	TODO: Windows
 endif()
 
 add_executable(helloworld src/helloworld.c)
