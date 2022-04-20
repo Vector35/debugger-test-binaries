@@ -127,7 +127,7 @@ def windows_build():
     #     value = b'='.join(parts[1:]).decode()
     #     os.environ[key] = value
 
-    build_cmd = f"cmake -B build/x86_64 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && nmake"
+    build_cmd = f"cmake -B build/x86_64 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && make"
     if not run_cmd(build_cmd):
         return False
 
@@ -141,7 +141,7 @@ def windows_build():
     #     value = b'='.join(parts[1:]).decode()
     #     os.environ[key] = value
 
-    build_cmd = f"cmake -B build/x86 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && nmake"
+    build_cmd = f"cmake -B build/x86 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && make"
     if not run_cmd(build_cmd):
         return False
 
