@@ -17,12 +17,13 @@ def run_cmd(cmd: str) -> bool:
 
 
 def create_archive():
-    print("\nCreating archive...")
-    with zipfile.ZipFile('binaries.zip', 'w', zipfile.ZIP_DEFLATED) as z:
-        for root, dirs, files in os.walk('binaries'):
-            for file in files:
-                print(f"Adding {root}/{file}...")
-                z.write(os.path.join(root, file), os.path.join(root, file))
+    pass
+    # print("\nCreating archive...")
+    # with zipfile.ZipFile('binaries.zip', 'w', zipfile.ZIP_DEFLATED) as z:
+    #     for root, dirs, files in os.walk('binaries'):
+    #         for file in files:
+    #             print(f"Adding {root}/{file}...")
+    #             z.write(os.path.join(root, file), os.path.join(root, file))
 
 
 def mac_build():
