@@ -52,11 +52,11 @@ def linux_build():
 
 
 def windows_build():
-    build_cmd = f"cmake -B build/x86_64 -G \"MSYS Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && make"
+    build_cmd = f"cmake -B build/x86_64 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && make"
     if not run_cmd(build_cmd):
         return False
 
-    build_cmd = f"cmake -B build/x86 -G \"MSYS Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && make"
+    build_cmd = f"cmake -B build/x86 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && make"
     if not run_cmd(build_cmd):
         return False
 
