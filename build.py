@@ -25,45 +25,45 @@ def create_archive():
                 z.write(os.path.join(root, file), os.path.join(root, file))
 
 
-def keychain_unlocker():
-    keychain_unlocker = os.environ["HOME"] + "/unlock-keychain"
-    if os.path.exists(keychain_unlocker):
-        return subprocess.call([keychain_unlocker]) == 0
-    return False
-
-
-def mac_sign(path):
-    if not keychain_unlocker():
-        return False
-
-    args = ['codesign']
-    args += ["--options", "runtime", "--entitlements", "entitlements.plist", "--timestamp", "-s", "Developer ID"]
-    for f in glob.glob(path):
-        args.append(f)
-
-    return subprocess.call(args) == 0
-
-
-def mac_notarize(path):
-    if not keychain_unlocker():
-        return False
-    args = ["/usr/bin/xcrun", "notarytool", "submit", path, "--verbose", "-p", "binaryninja", "--wait", "--no-progress", "--keychain", os.environ["HOME"] + "/Library/Keychains/codesign-db"]
-    print("Uploading for notarization...")
-    try:
-        result = subprocess.check_output(args, stderr=subprocess.STDOUT).decode("charmap")
-    except subprocess.CalledProcessError as e:
-        print(e.output)
-        return False
-    print(result)
-    result = result.split('\n')
-    request = None
-    for line in result:
-        if line.startswith('  status: Accepted'):
-            request = line.split(':')[1].strip()
-    if request is None:
-        print("No valid request ID received")
-        return False
-    return True
+# def keychain_unlocker():
+#     keychain_unlocker = os.environ["HOME"] + "/unlock-keychain"
+#     if os.path.exists(keychain_unlocker):
+#         return subprocess.call([keychain_unlocker]) == 0
+#     return False
+#
+#
+# def mac_sign(path):
+#     if not keychain_unlocker():
+#         return False
+#
+#     args = ['codesign']
+#     args += ["--options", "runtime", "--entitlements", "entitlements.plist", "--timestamp", "-s", "Developer ID"]
+#     for f in glob.glob(path):
+#         args.append(f)
+#
+#     return subprocess.call(args) == 0
+#
+#
+# def mac_notarize(path):
+#     if not keychain_unlocker():
+#         return False
+#     args = ["/usr/bin/xcrun", "notarytool", "submit", path, "--verbose", "-p", "binaryninja", "--wait", "--no-progress", "--keychain", os.environ["HOME"] + "/Library/Keychains/codesign-db"]
+#     print("Uploading for notarization...")
+#     try:
+#         result = subprocess.check_output(args, stderr=subprocess.STDOUT).decode("charmap")
+#     except subprocess.CalledProcessError as e:
+#         print(e.output)
+#         return False
+#     print(result)
+#     result = result.split('\n')
+#     request = None
+#     for line in result:
+#         if line.startswith('  status: Accepted'):
+#             request = line.split(':')[1].strip()
+#     if request is None:
+#         print("No valid request ID received")
+#         return False
+#     return True
 
 
 def mac_build():
@@ -81,15 +81,15 @@ def mac_build():
     if not run_cmd(build_cmd):
         return False
 
-    if not mac_sign('binaries/*/*'):
-        print('codesign failed')
-        return False
+    # if not mac_sign('binaries/*/*'):
+    #     print('codesign failed')
+    #     return False
 
     create_archive()
 
-    if not mac_notarize(os.path.realpath('binaries.zip')):
-        print('notarization failed')
-        return False
+    # if not mac_notarize(os.path.realpath('binaries.zip')):
+    #     print('notarization failed')
+    #     return False
 
     return True
 
