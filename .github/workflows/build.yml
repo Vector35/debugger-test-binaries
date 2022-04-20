@@ -21,7 +21,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: binaries-macos
-          path: binaries/*/*.exe
+          path: binaries/*/*
 
   build-linux:
     name: build on Linux
@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: binaries-linux
-          path: binaries/*/*.exe
+          path: binaries/*/*
 
   build-windows:
     name: build on Windows
