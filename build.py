@@ -117,31 +117,31 @@ def windows_build():
     if not os.path.exists('build/x86_64'):
         os.makedirs('build/x86_64')
 
-    vcvars = subprocess.check_output(fR"""call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars64.bat" && set""", shell=True)
-    for line in vcvars.split(b'\r\n'):
-        line = line.strip()
-        if b'=' not in line:
-            continue
-        parts = line.split(b'=')
-        key = parts[0].decode()
-        value = b'='.join(parts[1:]).decode()
-        os.environ[key] = value
+    # vcvars = subprocess.check_output(fR"""call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars64.bat" && set""", shell=True)
+    # for line in vcvars.split(b'\r\n'):
+    #     line = line.strip()
+    #     if b'=' not in line:
+    #         continue
+    #     parts = line.split(b'=')
+    #     key = parts[0].decode()
+    #     value = b'='.join(parts[1:]).decode()
+    #     os.environ[key] = value
 
-    build_cmd = f"cmake -B build/x86_64 -G \"NMake Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && nmake"
+    build_cmd = f"cmake -B build/x86_64 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86_64 . && cd build/x86_64 && nmake"
     if not run_cmd(build_cmd):
         return False
 
-    vcvars = subprocess.check_output(fR"""call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat" && set""", shell=True)
-    for line in vcvars.split(b'\r\n'):
-        line = line.strip()
-        if b'=' not in line:
-            continue
-        parts = line.split(b'=')
-        key = parts[0].decode()
-        value = b'='.join(parts[1:]).decode()
-        os.environ[key] = value
+    # vcvars = subprocess.check_output(fR"""call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Auxiliary\Build\vcvars32.bat" && set""", shell=True)
+    # for line in vcvars.split(b'\r\n'):
+    #     line = line.strip()
+    #     if b'=' not in line:
+    #         continue
+    #     parts = line.split(b'=')
+    #     key = parts[0].decode()
+    #     value = b'='.join(parts[1:]).decode()
+    #     os.environ[key] = value
 
-    build_cmd = f"cmake -B build/x86 -G \"NMake Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && nmake"
+    build_cmd = f"cmake -B build/x86 -G \"MinGW Makefiles\" -DCMAKE_BUILD_TYPE=Release -DARCH=x86 . && cd build/x86 && nmake"
     if not run_cmd(build_cmd):
         return False
 
