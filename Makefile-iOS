@@ -1,0 +1,23 @@
+# make -f Makefile-ios
+
+TARGET = arm64-apple-ios15.5
+SYSROOT = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator15.5.sdk
+
+# first target is default target when no target specified
+all: helloworld helloworld_thread do_exception exitcode
+
+helloworld:
+	clang -target $(TARGET) -isysroot $(SYSROOT) src/helloworld.c -o binaries/ios-arm64/helloworld
+	codesign -f -s - --entitlements entitlements.plist binaries/ios-arm64/helloworld
+
+helloworld_thread:
+	clang -target $(TARGET) -isysroot $(SYSROOT) src/helloworld_thread.c -o binaries/ios-arm64/helloworld_thread
+	codesign -f -s - --entitlements entitlements.plist binaries/ios-arm64/helloworld_thread
+
+do_exception:
+	clang -target $(TARGET) -isysroot $(SYSROOT) -DARCH_IS_AARCH64 src/do_exception.c -o binaries/ios-arm64/do_exception
+	codesign -f -s - --entitlements entitlements.plist binaries/ios-arm64/do_exception
+
+exitcode:
+	clang -target $(TARGET) -isysroot $(SYSROOT) src/exitcode.c -o binaries/ios-arm64/exitcode
+	codesign -f -s - --entitlements entitlements.plist binaries/ios-arm64/exitcode

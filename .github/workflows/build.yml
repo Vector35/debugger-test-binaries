@@ -24,6 +24,22 @@ jobs:
           name: binaries-macos
           path: binaries/*/*
 
+  build-ios:
+    name: build for ios
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: ./build_ios
+
+      - name: Upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: binaries-ios
+          path: binaries/*/*
+
   build-linux:
     name: build on Linux
     runs-on: ubuntu-latest
