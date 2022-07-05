@@ -4,7 +4,11 @@ TARGET = arm64-apple-ios15.5
 SYSROOT = /Applications/Xcode_13.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.5.sdk
 
 # first target is default target when no target specified
-all: helloworld helloworld_thread do_exception exitcode
+all: mkdir helloworld helloworld_thread do_exception exitcode
+
+mkdir:
+	mkdir binaries | true
+	mkdir binaries/ios-arm64 | true
 
 helloworld:
 	clang -target $(TARGET) -isysroot $(SYSROOT) src/helloworld.c -o binaries/ios-arm64/helloworld
