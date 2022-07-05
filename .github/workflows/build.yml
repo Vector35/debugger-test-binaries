@@ -31,13 +31,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-#      - name: Select Xcode
-#        run: sudo xcode-select -switch /Applications/Xcode_11.3.app
-      - name: Show SDK path
-        run: xcrun --sdk iphoneos --show-sdk-path
-
-      - name: ls
-        run: ls /Applications
+#      - name: Show SDK path
+#        run: xcrun --sdk iphoneos --show-sdk-path
+#
+#      - name: ls
+#        run: ls /Applications
 
       - name: Build
         run: ./build_ios
