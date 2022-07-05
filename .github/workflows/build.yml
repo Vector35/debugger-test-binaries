@@ -36,6 +36,9 @@ jobs:
       - name: Show SDK path
         run: xcrun --sdk iphoneos --show-sdk-path
 
+      - name: ls
+        run: ls /Applications
+
       - name: Build
         run: ./build_ios
 
