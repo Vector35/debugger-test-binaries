@@ -1,0 +1,22 @@
+# make -f Makefile-android to cross-compile on linux/macos
+
+SYSR_64 = $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/darwin-x86_64/sysroot
+CLANG_64 = $(ANDROID_NDK_HOME)/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang
+
+all: mkdir helloworld helloworld_thread do_exception exitcode
+
+mkdir:
+	mkdir binaries | true
+	mkdir binaries/android-aarch64 | true
+
+helloworld:
+	$(CLANG_64) --sysroot=$(SYSR_64) -target aarch64-linux-android21 src/helloworld.c -o binaries/android-aarch64/helloworld
+
+helloworld_thread:
+	$(CLANG_64) --sysroot=$(SYSR_64) -target aarch64-linux-android21 src/helloworld_loop.c -o binaries/android-aarch64/helloworld_loop
+
+do_exception:
+	$(CLANG_64) --sysroot=$(SYSR_64) -target aarch64-linux-android21 -DARCH_IS_AARCH64 src/do_exception.c -o binaries/android-aarch64/do_exception
+
+exitcode:
+	$(CLANG_64) --sysroot=$(SYSR_64) -target aarch64-linux-android21 src/exitcode.c -o binaries/android-aarch64/exitcode
