@@ -363,3 +363,13 @@ set_target_properties(test_library PROPERTIES
 		LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
 		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
 )
+
+if (APPLE)
+	set_property(TARGET test_library APPEND PROPERTY INSTALL_RPATH "@loader_path")
+	set_target_properties(test_library PROPERTIES
+			BUILD_WITH_INSTALL_RPATH TRUE)
+elseif (UNIX)
+	set_property(TARGET test_library APPEND PROPERTY INSTALL_RPATH "\$ORIGIN")
+	set_target_properties(test_library PROPERTIES
+			BUILD_WITH_INSTALL_RPATH TRUE)
+endif ()
