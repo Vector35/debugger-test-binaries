@@ -192,7 +192,7 @@ if (ARCH STREQUAL "x86_64")
 			add_custom_command(TARGET analysis_propagation POST_BUILD
 					COMMAND strip "$<TARGET_FILE:analysis_propagation>"
 					COMMAND python3 ${CMAKE_SOURCE_DIR}/src/rm_func_starts.py "$<TARGET_FILE:analysis_propagation>")
-		else()
+		elseif (UNIX)
 			add_custom_command(TARGET analysis_propagation POST_BUILD
 					COMMAND strip "$<TARGET_FILE:analysis_propagation>")
 		endif()
@@ -213,7 +213,7 @@ if (ARCH STREQUAL "x86_64")
 		add_custom_command(TARGET missing_switch_case POST_BUILD
 				COMMAND strip "$<TARGET_FILE:missing_switch_case>"
 				COMMAND python3 ${CMAKE_SOURCE_DIR}/src/rm_func_starts.py "$<TARGET_FILE:missing_switch_case>")
-	else()
+	elseif (UNIX)
 		add_custom_command(TARGET missing_switch_case POST_BUILD
 				COMMAND strip "$<TARGET_FILE:missing_switch_case>")
 	endif()
@@ -233,7 +233,7 @@ if (ARCH STREQUAL "x86_64")
 		add_custom_command(TARGET undiscovered_func POST_BUILD
 				COMMAND strip "$<TARGET_FILE:undiscovered_func>"
 				COMMAND python3 ${CMAKE_SOURCE_DIR}/src/rm_func_starts.py "$<TARGET_FILE:undiscovered_func>")
-	else()
+	elseif (UNIX)
 		add_custom_command(TARGET undiscovered_func POST_BUILD
 				COMMAND strip "$<TARGET_FILE:undiscovered_func>")
 	endif()
@@ -254,7 +254,7 @@ if (ARCH STREQUAL "x86_64")
 			add_custom_command(TARGET undiscovered_func2 POST_BUILD
 					COMMAND strip "$<TARGET_FILE:undiscovered_func2>"
 					COMMAND python3 ${CMAKE_SOURCE_DIR}/src/rm_func_starts.py "$<TARGET_FILE:undiscovered_func2>")
-		else()
+		elseif (UNIX)
 			add_custom_command(TARGET undiscovered_func2 POST_BUILD
 					COMMAND strip "$<TARGET_FILE:undiscovered_func2>")
 		endif()
@@ -275,7 +275,7 @@ if (ARCH STREQUAL "x86_64")
 		add_custom_command(TARGET indirect_calls POST_BUILD
 				COMMAND strip "$<TARGET_FILE:indirect_calls>"
 				COMMAND python3 ${CMAKE_SOURCE_DIR}/src/rm_func_starts.py "$<TARGET_FILE:indirect_calls>")
-	else()
+	elseif (UNIX)
 		add_custom_command(TARGET indirect_calls POST_BUILD
 				COMMAND strip "$<TARGET_FILE:indirect_calls>")
 	endif()
