@@ -342,3 +342,24 @@ if (NOT WIN32)
 else()
 	target_compile_options(md5 PUBLIC -DMD=5)
 endif()
+
+
+add_library(library SHARED src/debug_library/library.h src/debug_library/library.c)
+set_target_properties(library PROPERTIES
+		POSITION_INDEPENDENT_CODE ON
+		LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
+		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
+)
+if (WIN32)
+	set_target_properties(library PROPERTIES
+			WINDOWS_EXPORT_ALL_SYMBOLS ON
+	)
+endif ()
+
+add_executable(test_library src/debug_library/main.c)
+target_link_libraries(test_library library)
+set_target_properties(test_library PROPERTIES
+		POSITION_INDEPENDENT_CODE ON
+		LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
+		RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/binaries/${CMAKE_SYSTEM_NAME}-${ARCH}
+)
