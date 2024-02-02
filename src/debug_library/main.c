@@ -3,5 +3,5 @@
 
 int main(int argc, char** argv)
 {
-    printf("the value is: %llx", myFunc(argc));
+    printf("the value is: %llx\n", myFunc(argc));
 }
