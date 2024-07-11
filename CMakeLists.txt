@@ -3,6 +3,18 @@ cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 # This project builds the test binaries for the debugger unit test. It does not run the test.
 project(debugger-test-binaries C CXX)
 
+if (CROSS_COMPILE_LINUX)
+	message("Cross compiling for Linux aarch64")
+	SET(CMAKE_SYSTEM_NAME Linux)
+	SET(CMAKE_SYSTEM_VERSION 1)
+	SET(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+	SET(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+	SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+	SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+	SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+	SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+endif()
+
 if (ARCH STREQUAL "x86_64")
 	add_definitions(-DARCH_IS_X64)
 elseif(ARCH STREQUAL "x86")

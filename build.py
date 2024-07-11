@@ -48,6 +48,10 @@ def linux_build():
     if not run_cmd(build_cmd):
         return False
 
+    build_cmd = f"cmake -B build/arm64 -DARCH=arm64 -DCROSS_COMPILE_LINUX=ON . && cd build/arm64 && make"
+    if not run_cmd(build_cmd):
+        return False
+
     create_archive()
     return True
 
