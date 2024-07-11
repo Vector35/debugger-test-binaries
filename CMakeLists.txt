@@ -155,7 +155,7 @@ if (ARCH STREQUAL "x86_64" OR ARCH STREQUAL "x86")
 	endif(APPLE)
 
 	if (APPLE)
-		set(CMAKE_NASM_LINK_EXECUTABLE "ld <LINK_FLAGS> -e _start -macos_version_min 10.7.0 -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
+		set(CMAKE_NASM_LINK_EXECUTABLE "ld <LINK_FLAGS> -macos_version_min 10.7.0 -L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib <OBJECTS> -o <TARGET> <LINK_LIBRARIES>")
 	elseif (WIN32)
 		set(CMAKE_NASM_LINK_EXECUTABLE "link <OBJECTS> <LINK_FLAGS> /ENTRY:WinMain /SUBSYSTEM:CONSOLE /LARGEADDRESSAWARE:NO /DYNAMICBASE:NO /OUT:<TARGET> <LINK_LIBRARIES>")
 	else()
