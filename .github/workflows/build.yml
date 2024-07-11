@@ -69,7 +69,10 @@ jobs:
     steps:
       - uses: ilammy/setup-nasm@v1
       - name: Install gcc-multilib
-        run: sudo apt install gcc-multilib g++-multilib gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+        run: sudo apt install -y gcc-multilib g++-multilib
+
+      - name: Install gcc-aarch64
+        run: sudo apt install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 
       - uses: actions/checkout@v4
 
