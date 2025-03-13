@@ -9,7 +9,7 @@ on:
 jobs:
   build-macos:
     name: build on macOS
-    runs-on: macos-12
+    runs-on: macos-14
 
     steps:
       - uses: ilammy/setup-nasm@v1
@@ -26,7 +26,7 @@ jobs:
 
   build-ios:
     name: build for ios
-    runs-on: macos-12
+    runs-on: macos-14
 
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
 
   build-android:
     name: build for android
-    runs-on: macos-12
+    runs-on: macos-14
 
     steps:
       - uses: actions/checkout@v4
