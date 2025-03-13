@@ -20,7 +20,7 @@ default rel
 	_start:
 %endif
 
-	nop
+	and esp, 0xfffffff0
 	call bounce
 	nop
 	call bounce
